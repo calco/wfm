@@ -1,0 +1,7 @@
+%h1 Vacations
+- if @vacations
+  - @vacations.each do |vacation|
+    = vacation.vacation_type
+    = vacation.start_date
+    = vacation.end_date
+    = vacation.vacation_status

@@ -1,0 +1,27 @@
+!!!
+%html
+  %head
+    %title Workforce Management
+    = stylesheet_link_tag "application", :media => "all", 'data-turbolinks-track' => true
+    = javascript_include_tag "application", 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body.body
+    .navbar.navbar-inverse.navbar-fixed-top
+      .container-fluid
+        .navbar-header
+          = link_to "WFM", root_path, class: 'active navbar-brand'
+        .pull-right
+          %ul.nav.navbar-nav
+            %li
+              = link_to "+ Add Vacation", new_vacation_path, class: 'active'
+    .container
+      - unless notice.nil?
+        .alert.alert-success
+          = notice
+          %a.close{:href => "#", :data => {:dismiss => "alert"}} &times;
+      - unless alert.nil?
+        .alert.alert-error
+          = alert
+          %a.close{:href => "#", :data => {:dismiss => "alert"}} &times;
+      .row
+        = yield
