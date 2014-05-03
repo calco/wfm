@@ -1,0 +1,34 @@
+%h1 User's Vacation
+%br
+%strong.col-sm-2 Applicant:
+.col-sm-5
+  User
+%br
+%br
+%strong.col-sm-2 Type:
+.col-sm-5
+  = @vacation.vacation_type
+%br
+%br
+%strong.col-sm-2 Starts:
+.col-sm-5
+  = @vacation.start_date.strftime('%d %B %Y')
+%br
+%br
+%strong.col-sm-2 Ends:
+.col-sm-5
+  = @vacation.end_date.strftime('%d %B %Y')
+%br
+%br
+%strong.col-sm-2 Status:
+.col-sm-5
+  = @vacation.vacation_status.humanize
+- if @vacation.vacation_status == "pending"
+  %br
+  %br
+  .col-sm-2.pull-right
+    = link_to "Approve", approve_vacation_path(@vacation), class: "btn btn-success"
+    = link_to "Reject", reject_vacation_path(@vacation), class: "btn btn-danger"
+/   %strong Controls
+/   = link_to "Edit", edit_vacation_path(@vacation)
+/   = link_to "Remove", vacation_path(@vacation), method: :delete, data: { confirm: 'Are you sure?' }

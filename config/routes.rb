@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   resources :vacations
+  get 'vacations/:id/approve' => 'vacations#approve_vacation', as: :approve_vacation
+  get 'vacations/:id/reject' => 'vacations#reject_vacation', as: :reject_vacation
 
   # You can have the root of your site routed with "root"
   root 'vacations#index'

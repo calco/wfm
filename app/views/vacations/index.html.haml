@@ -1,7 +1,27 @@
 %h1 Vacations
 - if @vacations
-  - @vacations.each do |vacation|
-    = vacation.vacation_type
-    = vacation.start_date
-    = vacation.end_date
-    = vacation.vacation_status
+  %table.table
+    %thead
+      %tr
+        %th Applicant
+        %th Type
+        %th Starts
+        %th Ends
+        %th Status
+        %th Controls
+    %tbody
+      - @vacations.each do |vacation|
+        %tr
+          %td User
+          %td
+            = vacation.vacation_type
+          %td
+            = vacation.start_date.strftime('%d %B %Y')
+          %td
+            = vacation.end_date.strftime('%d %B %Y')
+          %td
+            = vacation.vacation_status.humanize
+          %td
+            .btn-group.btn-group-xs
+              = link_to "Edit", edit_vacation_path(vacation), class: "btn btn-info"
+              = link_to "Remove", vacation_path(vacation), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"

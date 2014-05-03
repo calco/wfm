@@ -1,6 +1,15 @@
 %h1 Add a new vacation
 
 = form_for @vacation do |f|
+  - if @vacation.errors.any?
+    .alert.alert-danger
+      %h4
+        = pluralize(@vacation.errors.count, "error")
+        prohibited this article from being saved:
+      %ul
+        - @vacation.errors.full_messages.each do |msg|
+          %li
+            = msg
   .form-horizontal
     .form-group
       .col-sm-2

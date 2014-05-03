@@ -9,23 +9,54 @@ class VacationsController < ApplicationController
 
   def create
     @vacation = Vacation.new(vacation_params)
-    respond_to do |format|
-      if @vacation.save
-        format.html { redirect_to root_path, :notice => "Vacation added successfully." }
-      end
+    @vacation.vacation_status = "pending"
+    if @vacation.save
+      redirect_to @vacation, notice: "Vacation added successfully."
+    else
+      render 'new'
     end
   end
 
   def show
+    @vacation = Vacation.find params[:id]
   end
 
   def edit
+    @vacation = Vacation.find params[:id]
   end
 
   def update
+    @vacation = Vacation.find(params[:id])
+    if @vacation.update(vacation_params)
+      redirect_to @vacation
+    else
+      render 'edit'
+    end
   end
 
-  def delete
+  def destroy
+    @vacation = Vacation.find(params[:id])
+    @vacation.destroy
+   
+    redirect_to vacations_path
+  end
+
+  def approve_vacation
+    @vacation = Vacation.find(params[:id])
+    if @vacation.update(vacation_status: "approved")
+      redirect_to @vacation, notice: "Vacation approved successfully."
+    else
+      redirect_to @vacation, alert: "An error happened and the vacation could not be approved."
+    end
+  end
+
+  def reject_vacation
+    @vacation = Vacation.find(params[:id])
+    if @vacation.update(vacation_status: "rejected")
+      redirect_to @vacation, notice: "Vacation rejected successfully."
+    else
+      redirect_to @vacation, alert: "An error happened and the vacation could not be rejected."
+    end
   end
 
   private
