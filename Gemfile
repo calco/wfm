@@ -8,7 +8,13 @@ gem 'rails', '4.1.0'
 gem 'haml-rails'
 # Use mysql as the database for Active Record
 gem 'mysql2'
+# Use Devise for User Authentication
+gem 'devise'
 
+######    Server Gem    ######
+
+# Use Thin Server
+gem 'thin'
 
 ######   Styling Gems   ######
 
@@ -28,11 +34,6 @@ gem 'coffee-rails', '~> 4.0.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-
-######    Server Gem    ######
-
-# Use Thin Server
-gem 'thin'
 
 
 gem 'turbolinks'

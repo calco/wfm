@@ -1,6 +1,9 @@
 class VacationsController < ApplicationController
+
+  before_action :authenticate_employee!
+
   def index
-    @vacations = Vacation.all.to_a
+    @vacations = current_employee.vacations
   end
 
   def new
@@ -10,6 +13,7 @@ class VacationsController < ApplicationController
   def create
     @vacation = Vacation.new(vacation_params)
     @vacation.vacation_status = "pending"
+    @vacation.employee_id = current_employee.id
     if @vacation.save
       redirect_to @vacation, notice: "Vacation added successfully."
     else

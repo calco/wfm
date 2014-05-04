@@ -1,4 +1,4 @@
-%h1 Vacations
+%h1 Your vacations
 - if @vacations
   %table.table
     %thead
@@ -12,13 +12,18 @@
     %tbody
       - @vacations.each do |vacation|
         %tr
-          %td User
+          %td
+            - if vacation.employee.first_name && vacation.employee.last_name
+              = vacation.employee.first_name
+              = vacation.employee.last_name
+            - else
+              = vacation.employee.username
           %td
             = vacation.vacation_type.humanize
           %td
-            = vacation.start_date.strftime('%d %B %Y')
+            = I18n.l(vacation.start_date)
           %td
-            = vacation.end_date.strftime('%d %B %Y')
+            = I18n.l(vacation.end_date)
           %td
             = vacation.vacation_status.humanize
           %td
@@ -26,3 +31,6 @@
               = link_to "View", vacation_path(vacation), class: "btn btn-primary"
               = link_to "Edit", edit_vacation_path(vacation), class: "btn btn-info"
               = link_to "Remove", vacation_path(vacation), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
+- if @vacations.empty?
+  .text-center
+    %h4 You do not have any vacations on record.

@@ -14,6 +14,8 @@
           %ul.nav.navbar-nav
             %li
               = link_to "+ Add Vacation", new_vacation_path, class: 'active'
+            %li
+              = link_to "Sign out", destroy_employee_session_path, method: :delete, class: 'active'
     .container
       - unless notice.nil?
         .alert.alert-success

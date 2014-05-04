@@ -1,9 +1,14 @@
 class Vacation < ActiveRecord::Base
+  
+  # Relations
+  belongs_to :employee
+
+  # Vacation types ...
   VACATION_TYPES = %w[annual medical]
 
+  # Validations
   validates_presence_of :vacation_type, :start_date, :end_date
   validate :start_end_date_validation
-  # validate :end_date, date: { after_or_equal_to: self[:start_date] }
   
   # private
 
