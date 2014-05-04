@@ -6,11 +6,16 @@ class Employee < ActiveRecord::Base
 
   # Relations with other models
   has_many :vacations
+  belongs_to :manager, class_name: 'Employee'
+  has_many :subordinates, class_name: 'Employee', foreign_key: 'manager_id'
 
   attr_accessor :login
 
+  # Employee roles ...
+  EMPLOYEE_ROLES = %w[HR employee]
+
   # Validations
-  validates_presence_of :username, :first_name, :last_name
+  validates_presence_of :username
   validates :username,
   :uniqueness => {
     :case_sensitive => false

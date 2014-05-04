@@ -6,6 +6,10 @@
   = devise_error_messages!
 
   %div
+    = f.label :manager_id
+    %br
+    = f.collection_select :manager, Employee.all, :id, :username, prompt: true, class: "form-control"
+  %div
     = f.label :first_name
     %br
     = f.text_field :first_name
