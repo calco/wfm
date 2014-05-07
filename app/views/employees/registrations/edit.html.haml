@@ -8,7 +8,7 @@
   %div
     = f.label :manager_id
     %br
-    = f.collection_select :manager, Employee.all, :id, :username, prompt: true, class: "form-control"
+    = f.collection_select :manager_id, Employee.all, :id, :username, prompt: true
   %div
     = f.label :first_name
     %br

@@ -13,7 +13,7 @@ class VacationsController < ApplicationController
   def create
     @vacation = Vacation.new(vacation_params)
     @vacation.vacation_status = "pending"
-    @vacation.employee_id = current_employee.id
+    @vacation.applicant_id = current_employee.id
     if @vacation.save
       redirect_to @vacation, notice: "Vacation added successfully."
     else

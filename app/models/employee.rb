@@ -5,17 +5,17 @@ class Employee < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Relations with other models
-  has_many :vacations
-  belongs_to :manager, class_name: 'Employee'
-  has_many :subordinates, class_name: 'Employee', foreign_key: 'manager_id'
+  has_many :vacations, foreign_key: "applicant_id"
+  has_many :subordinates, class_name: "Employee", foreign_key: "manager_id"
+  belongs_to :manager, class_name: "Employee"
 
   attr_accessor :login
 
   # Employee roles ...
-  EMPLOYEE_ROLES = %w[HR employee]
+  EMPLOYEE_ROLES = %w[hr employee]
 
   # Validations
-  validates_presence_of :username
+  validates_presence_of :username, :first_name, :last_name
   validates :username,
   :uniqueness => {
     :case_sensitive => false

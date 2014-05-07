@@ -13,11 +13,8 @@
       - @vacations.each do |vacation|
         %tr
           %td
-            - if vacation.employee.first_name && vacation.employee.last_name
-              = vacation.employee.first_name
-              = vacation.employee.last_name
-            - else
-              = vacation.employee.username
+            = vacation.applicant.first_name
+            = vacation.applicant.last_name
           %td
             = vacation.vacation_type.humanize
           %td
@@ -34,3 +31,37 @@
 - if @vacations.empty?
   .text-center
     %h4 You do not have any vacations on record.
+- unless current_employee.subordinates.empty? 
+  %br
+  %br
+  %h1 Vacations Pending Your Approval:
+  %table.table
+    %thead
+      %tr
+        %th Applicant
+        %th Type
+        %th Starts
+        %th Ends
+        %th Status
+        %th Controls
+    %tbody
+      - current_employee.subordinates.each do |subordinate|
+        - subordinate.vacations.each do |vacation|
+          - if vacation.status == "pending"
+            %tr
+              %td
+                = vacation.applicant.first_name
+                = vacation.applicant.last_name
+              %td
+                = vacation.vacation_type.humanize
+              %td
+                = I18n.l(vacation.start_date)
+              %td
+                = I18n.l(vacation.end_date)
+              %td
+                = vacation.vacation_status.humanize
+              %td
+                .btn-group.btn-group-xs
+                  = link_to "View", vacation_path(vacation), class: "btn btn-primary"
+                  = link_to "Edit", edit_vacation_path(vacation), class: "btn btn-info"
+                  = link_to "Remove", vacation_path(vacation), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"

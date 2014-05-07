@@ -1,10 +1,25 @@
-%h1 User's Vacation
+%h1 
+  = @vacation.applicant.first_name
+  = "#{@vacation.applicant.last_name}'s"
+  = "(#{@vacation.applicant.username})"
+  Vacation
 %br
 %strong.col-sm-2 Applicant:
 .col-sm-5
-  User
+  = @vacation.applicant.first_name
+  = @vacation.applicant.last_name
+  (
+  = @vacation.applicant.username
+  )
 %br
 %br
+- if @vacation.applicant.manager && @vacation.applicant.manager.id != @vacation.applicant.id
+  %strong.col-sm-2 Direct Manager:
+  .col-sm-5
+    = @vacation.applicant.manager.first_name
+    = @vacation.applicant.manager.last_name
+  %br
+  %br
 %strong.col-sm-2 Type:
 .col-sm-5
   = @vacation.vacation_type.humanize
@@ -20,10 +35,15 @@
   = @vacation.end_date.strftime('%d %B %Y')
 %br
 %br
+%strong.col-sm-2 Duration:
+.col-sm-5
+  = distance_of_time_in_words(@vacation.start_date, @vacation.end_date)
+%br
+%br
 %strong.col-sm-2 Status:
 .col-sm-5
   = @vacation.vacation_status.humanize
-- if @vacation.vacation_status == "pending"
+- if @vacation.vacation_status == "pending" && @vacation.applicant.manager == current_employee
   %br
   %br
   .col-sm-2.pull-right

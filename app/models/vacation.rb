@@ -1,7 +1,7 @@
 class Vacation < ActiveRecord::Base
   
   # Relations
-  belongs_to :employee
+  belongs_to :applicant, class_name: "Employee"
 
   # Vacation types ...
   VACATION_TYPES = %w[annual medical]

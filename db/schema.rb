@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20140504173521) do
     t.string   "vacation_status"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "employee_id"
+    t.integer  "applicant_id"
   end
 
 end
