@@ -32,10 +32,14 @@ class VacationsController < ApplicationController
 
   def update
     @vacation = Vacation.find(params[:id])
-    if @vacation.update(vacation_params)
-      redirect_to @vacation
+    if @vacation.vacation_status == "pending"
+      if @vacation.update(vacation_params)
+        redirect_to @vacation
+      else
+        render 'edit'
+      end
     else
-      render 'edit'
+      redirect_to @vacation, alert: "This vacation cannot be edited since it was already #{@vacation.vacation_status}."
     end
   end
 
