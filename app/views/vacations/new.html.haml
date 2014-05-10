@@ -11,29 +11,28 @@
           %li
             = msg
   .form-horizontal
-    .form-group
-      .col-sm-2
-        .control-label
-          = f.label :vacation_type, "Type"
-      .col-sm-3
-        = f.collection_select :vacation_type, Vacation::VACATION_TYPES, :to_s, :humanize, prompt: true, class: "form-control"
-    %br
-    .form-group
-      .col-sm-2
-        .control-label
-          = f.label :start_date
-      .col-sm-3
-        = f.text_field :start_date, class: "form-control"
-    %br
-    .form-group
-      .col-sm-2
-        .control-label
-          = f.label :end_date
-      .col-sm-3
-        = f.text_field :end_date, class: "form-control"
-    %br
-    .form-group
-      .col-sm-offset-2.col-sm-10
-        = f.submit "Create", class: "btn btn-primary"
-%p
-  
+    .row
+      .form-group
+        .col-sm-2
+          .control-label
+            = f.label :vacation_type, "Type"
+        .col-sm-3
+          = f.collection_select :vacation_type, Vacation::VACATION_TYPES, :to_s, :humanize, prompt: true, class: "form-control"
+    .row
+      .form-group
+        .col-sm-2
+          .control-label
+            = f.label :start_date
+        .col-sm-3
+          = f.text_field :start_date, class: "form-control"
+    .row
+      .form-group
+        .col-sm-2
+          .control-label
+            = f.label :end_date
+        .col-sm-3
+          = f.text_field :end_date, class: "form-control"
+    .row
+      .form-group
+        .col-sm-offset-2.col-sm-3
+          = f.submit "Request", class: "btn btn-primary"
