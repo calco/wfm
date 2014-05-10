@@ -3,12 +3,15 @@ class Vacation < ActiveRecord::Base
   # Relations
   belongs_to :applicant, class_name: "Employee"
 
-  # Vacation types ...
-  VACATION_TYPES = %w[annual medical]
-
   # Validations
   validates_presence_of :vacation_type, :start_date, :end_date
   validate :start_end_date_validation
+
+  # Scopes
+  scope :pending_vacations, -> { where(vacation_status: "pending") }
+
+  # Vacation types ...
+  VACATION_TYPES = %w[annual medical]
   
   # private
 

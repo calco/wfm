@@ -1,67 +1,65 @@
-%h1 Your vacations
-- if @vacations
-  %table.table
-    %thead
+%h3 Your vacations
+%table.table.table-hover
+  %thead
+    %tr
+      %th Type
+      %th Starts
+      %th Ends
+      %th Status
+      %th Controls
+  %tbody
+    - @vacations.each do |vacation|
       %tr
-        %th Applicant
-        %th Type
-        %th Starts
-        %th Ends
-        %th Status
-        %th Controls
-    %tbody
-      - @vacations.each do |vacation|
-        %tr
-          %td
-            = vacation.applicant.first_name
-            = vacation.applicant.last_name
-          %td
-            = vacation.vacation_type.humanize
-          %td
-            = I18n.l(vacation.start_date)
-          %td
-            = I18n.l(vacation.end_date)
-          %td
-            = vacation.vacation_status.humanize
-          %td
-            .btn-group.btn-group-xs
-              = link_to "View", vacation_path(vacation), class: "btn btn-primary"
-              = link_to "Edit", edit_vacation_path(vacation), class: "btn btn-info"
-              = link_to "Remove", vacation_path(vacation), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
+        %td
+          = vacation.vacation_type.humanize
+        %td
+          = I18n.l(vacation.start_date)
+        %td
+          = I18n.l(vacation.end_date)
+        %td
+          = vacation.vacation_status.humanize
+        %td
+          .btn-group.btn-group-xs
+            = link_to "View", vacation_path(vacation), class: "btn btn-primary"
+            = link_to "Edit", edit_vacation_path(vacation), class: "btn btn-info"
+            = link_to "Remove", vacation_path(vacation), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
 - if @vacations.empty?
   .text-center
     %h4 You do not have any vacations on record.
-- unless current_employee.subordinates.empty? 
-  %br
-  %br
-  %h1 Vacations Pending Your Approval:
-  %table.table
-    %thead
+
+%br
+%br
+
+%h3 Subordinates' vacations
+%table.table
+  %thead
+    %tr
+      %th Applicant
+      %th Type
+      %th Starts
+      %th Ends
+      %th Status
+      %th Controls
+  %tbody
+    - @subordinate_pending_vacations.each do |subordinate_vacation|
       %tr
-        %th Applicant
-        %th Type
-        %th Starts
-        %th Ends
-        %th Status
-        %th Controls
-    %tbody
-      - current_employee.subordinates.each do |subordinate|
-        - subordinate.vacations.each do |vacation|
-          - if vacation.status == "pending"
-            %tr
-              %td
-                = vacation.applicant.first_name
-                = vacation.applicant.last_name
-              %td
-                = vacation.vacation_type.humanize
-              %td
-                = I18n.l(vacation.start_date)
-              %td
-                = I18n.l(vacation.end_date)
-              %td
-                = vacation.vacation_status.humanize
-              %td
-                .btn-group.btn-group-xs
-                  = link_to "View", vacation_path(vacation), class: "btn btn-primary"
-                  = link_to "Edit", edit_vacation_path(vacation), class: "btn btn-info"
-                  = link_to "Remove", vacation_path(vacation), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
+        %td
+          = subordinate_vacation.applicant.first_name
+          = subordinate_vacation.applicant.last_name
+          = "(#{subordinate_vacation.applicant.username})"
+        %td
+          = subordinate_vacation.vacation_type.humanize
+        %td
+          = I18n.l(subordinate_vacation.start_date)
+        %td
+          = I18n.l(subordinate_vacation.end_date)
+        %td
+          = subordinate_vacation.vacation_status.humanize
+        %td
+          .btn-group.btn-group-xs
+            = link_to "View", vacation_path(subordinate_vacation), class: "btn btn-primary"
+            = link_to "Edit", edit_vacation_path(subordinate_vacation), class: "btn btn-info"
+            = link_to "Remove", vacation_path(subordinate_vacation), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
+- if @subordinate_pending_vacations.empty?
+  .text-center
+    %h4 No vacations are currently pending your approval

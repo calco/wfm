@@ -3,7 +3,8 @@ class VacationsController < ApplicationController
   before_action :authenticate_employee!
 
   def index
-    @vacations = current_employee.vacations
+    @vacations = current_employee.vacations.order(:start_date)
+    @subordinate_pending_vacations = Vacation.pending_vacations.order(:start_date).to_a.keep_if{|v| v.applicant.manager_id == current_employee.id }
   end
 
   def new
