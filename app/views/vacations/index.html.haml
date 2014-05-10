@@ -2,27 +2,22 @@
 %table.table.table-hover
   %thead
     %tr
-      %th Type
       %th Starts
       %th Ends
+      %th Type
       %th Status
       %th Controls
   %tbody
     - @vacations.each do |vacation|
-      %tr
-        %td
-          = vacation.vacation_type.humanize
-        %td
-          = I18n.l(vacation.start_date)
-        %td
-          = I18n.l(vacation.end_date)
-        %td
-          = vacation.vacation_status.humanize
-        %td
-          .btn-group.btn-group-xs
-            = link_to "View", vacation_path(vacation), class: "btn btn-primary"
-            = link_to "Edit", edit_vacation_path(vacation), class: "btn btn-info"
-            = link_to "Remove", vacation_path(vacation), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
+      - if vacation.vacation_status == "approved"
+        %tr.success
+          = render partial: "my_vacations", locals: {vacation: vacation}
+      - elsif vacation.vacation_status == "rejected"
+        %tr.danger
+          = render partial: "my_vacations", locals: {vacation: vacation}
+      - else
+        %tr.warning
+          = render partial: "my_vacations", locals: {vacation: vacation}
 - if @vacations.empty?
   .text-center
     %h4 You do not have any vacations on record.
@@ -30,15 +25,14 @@
 %br
 %br
 
-%h3 Subordinates' vacations
-%table.table
+%h3 Subordinates' pending vacations
+%table.table.table-hover
   %thead
     %tr
       %th Applicant
       %th Type
       %th Starts
       %th Ends
-      %th Status
       %th Controls
   %tbody
     - @subordinate_pending_vacations.each do |subordinate_vacation|
@@ -53,8 +47,6 @@
           = I18n.l(subordinate_vacation.start_date)
         %td
           = I18n.l(subordinate_vacation.end_date)
-        %td
-          = subordinate_vacation.vacation_status.humanize
         %td
           .btn-group.btn-group-xs
             = link_to "View", vacation_path(subordinate_vacation), class: "btn btn-primary"
