@@ -32,22 +32,25 @@ class VacationsController < ApplicationController
 
   def update
     @vacation = Vacation.find(params[:id])
-    if @vacation.vacation_status == "pending"
+    if @vacation.vacation_status == "pending" && @vacation.applicant == current_employee
       if @vacation.update(vacation_params)
         redirect_to @vacation
       else
         render 'edit'
       end
     else
-      redirect_to @vacation, alert: "This vacation cannot be edited since it was already #{@vacation.vacation_status}."
+      redirect_to @vacation, alert: "This vacation cannot be edited since it was already reviewed."
     end
   end
 
   def destroy
     @vacation = Vacation.find(params[:id])
-    @vacation.destroy
-   
-    redirect_to vacations_path
+    if @vacation.vacation_status == "pending" && @vacation.applicant == current_employee
+      @vacation.destroy
+      redirect_to vacations_path
+    else
+      redirect_to @vacation, alert: "This vacation cannot be removed since it was already reviewed."
+    end
   end
 
   def approve_vacation

@@ -8,6 +8,7 @@
   = vacation.vacation_status.humanize
 %td
   .btn-group.btn-group-xs
-    = link_to "View", vacation_path(vacation), class: "btn btn-primary"
-    = link_to "Edit", edit_vacation_path(vacation), class: "btn btn-info"
-    = link_to "Remove", vacation_path(vacation), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
+    = link_to "Details", vacation_path(vacation), class: "btn btn-default"
+    = link_to "Edit", edit_vacation_path(vacation), class: "btn btn-default"
+  - if vacation.vacation_status == "pending"
+    = link_to "Remove", vacation_path(vacation), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs"
